@@ -1,0 +1,7 @@
+﻿ ~sansmotcle.1.0 #! Quel est le sens de la vie
+ ~sansmotcle.2.0 #! oui, pour si l'utilisateur dit oui, ok ou presse juste entrée, alors on passe à la suite en donnant la main au bot
+ ~sansmotcle.3.0 #! Qu'est-ce que la démocratie?
+ ~sansmotcle.3.0 #! Est-ce que le climat change?
+ ~sansmotcle.4.0 #! Qui est Gandhi
+ ~sansmotcle.4.0 #! Qui est Anatole France 
+ ~sansmotcle.4.0 #! Who is Athenian democracy 

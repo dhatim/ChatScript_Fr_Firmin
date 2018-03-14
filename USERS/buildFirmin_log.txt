@@ -1,0 +1,32 @@
+﻿ChatScript Version 8.1  compiled Feb 18 2018 19:44:05
+
+>>Reading folder RAWDATA/FIRMIN/
+
+----Reading file enfance.top
+Reading topic ~enfance
+*** Warning- line 2 of enfance.top: Word histoire only known in opposite case
+
+----Reading file introductions.top
+Reading topic ~introductions
+
+----Reading file sansmotcle.top
+Reading topic ~sansmotcle
+*** Warning- line 17 of sansmotcle.top: Substitutes.txt changes que to queue anywhere in input
+*** Warning- line 30 of sansmotcle.top: Word est only known in opposite case
+
+----Reading file simplecontrol.top
+Reading outputmacro: ^firmin
+Reading table ^tbl:defaultbot
+Reading topic ~control
+Reading topic ~xpostprocess
+
+<<end folder RAWDATA/FIRMIN
+*** Warning-  Undefined set or topic ~non line 19 in introductions.top
+
+WARNING SUMMARY: 
+  line 1 of : Undefined set or topic ~non line 19 in introductions.top
+1 serious warnings, 0 function warnings, 0 spelling warnings, 2 case warnings, 1 substitution warnings
+    
+
+Finished compile
+

@@ -1,0 +1,20 @@
+﻿ ~enfance.0.0 #!x Ce sujet est un exemple d'un sujet simple, avec une présentation propre.
+ ~enfance.0.0 #!x Il est bien commenté avec des annotations pour:abstract et :verify.
+     ~enfance.0.1 #! biensur
+     ~enfance.0.2 #! jamais
+     ~enfance.2.1 #! J'avais peur du noir
+     ~enfance.2.2 #! J'aime le poulet de Brest
+     ~enfance.2.3 #! le grand méchant loup
+     ~enfance.2.4 #! peur des dragons
+     ~enfance.2.5 #! les araignées me font peur
+     ~enfance.2.6 #! serpents
+     ~enfance.2.7 #! tigres
+     ~enfance.2.8 #! J'ai fait des cauchemars
+     ~enfance.2.9 #! oui
+     ~enfance.2.10 #! non 
+ ~enfance.5.0 #! es-tu déjà parti en voyage?
+ ~enfance.6.0 #! comment était ton enfance?
+ ~enfance.7.0 #! comment étiez-vous comme un gamin?
+ ~enfance.8.0 #!!K what scares you?
+ ~enfance.9.0 #! quel est votre premier souvenir d'enfance?
+ ~enfance.10.0 #! raconte-moi ton histoire

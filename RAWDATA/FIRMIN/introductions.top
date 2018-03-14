@@ -1,0 +1,22 @@
+
+topic: ~INTRODUCTIONS (~emogoodbye ~emohello ~emohowzit nom ici )
+
+#!x respond à chaque nouvelle conversation d'un utilissateur précédent
+t: ( %input<%userfirstline %input>0 ) 
+	^keep()  
+	[Soit à nouveau le bienvenu !] [Re bonjour.][Content de te revoir.][Salut.][Re.]
+
+#!x respond à chaque nouvelle conversation d'un nouvel utilisateur
+t: ( %input<%userfirstline ) 
+	^keep()   
+	Bienvenu dans ChatScript.
+
+#!x Fonctionne une seule fois, puis est effacé
+t: Es-tu déjà venu ici avant ?
+	#! oui
+	a: (~yes) Soit à nouveau le bienvenu !
+	#! non
+	a: (~non) Alors bienvenu !
+
+#! comment vous appelez-vous 
+u: ( comment tu t'appelle ) Mon nom est Firmin. Je suis une IA.

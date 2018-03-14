@@ -1,0 +1,138 @@
+# cette fonction est exécutée une fois pour chaque nouvel utilisateur discutant avec firmin
+outputmacro: firmin()  # you get firmin by default
+$cs_token = #DO_INTERJECTION_SPLITTING  | #DO_SUBSTITUTE_SYSTEM   | #DO_NUMBER_MERGE | #DO_DATE_MERGE  | #DO_PROPERNAME_MERGE  | #DO_SPELLCHECK  | #DO_PARSE 
+$cs_token += #SPLIT_QUOTE | #NO_WITHIN
+
+^addtopic(~introductions)
+$cs_control_main = ~control
+$cs_control_post = ~XPOSTPROCESS  # commenter pour désactiver la conversation
+$userprompt = ^"%user: >"
+$botprompt = ^"FIRMIN: "
+$singleResponse = 1 # émettre seulement 1 message de sortie
+
+
+table: defaultbot (^name)
+^createfact(^name defaultbot defaultbot)
+DATA:
+firmin
+
+topic: ~control system ()
+
+# au départ, lancer : introduction
+u: ( %input<%userfirstline) 
+	gambit(~introductions)
+
+u: (< shut up >) $shutup = 1
+u: (< talk  >) $shutup = null
+
+u: (\[ callback \]) Callback seen.
+u: (\[ loopback \]) Loopback seen.
+u: (\[ alarm \]) Alarm seen.
+u: (< loopback test) \[ loopback=1000 \] Loopback requested.
+u: (< callback test) \[ callback=1000 \] Callback requested.
+u: (< alarm test) \[ alarm=5000 \] Alarm requested.
+
+u: () # main per-sentence processing
+	$_responseCount = %response
+	if ($singleResponse) {$_responseCount = 0} # désactiver cela pour répondre à chaque phrase dans une volée
+
+	$$currenttopic = %topic		# obtenir le sujet actuel au début de la volée
+
+	if ( %response == $_responseCount ) {nofail(TOPIC ^rejoinder())}	# essayez de répliques. pourrait générer une réponse directement à partir de ce que nous recherchons.
+
+	if (%length == 0 AND %response == $_responseCount )
+	{
+		nofail(TOPIC ^gambit($$currenttopic))  # gambit current topic since no input (usually start of conversation)
+	}
+
+	if (%response == $_responseCount) { nofail(TOPIC ^respond($$currenttopic)) } # le sujet actuel tente de répondre à son entrée
+
+	if (%response == $_responseCount) # regarde si un autre sujet a des mots-clés correspondant à son entrée (étant donné que nous n'avons pas encore de réponse)
+	{
+		@8 = ^keywordtopics()	# obtient des sujets référencés en entrée
+		loop()
+		{
+			$$topic = first(@8subject)
+			nofail(TOPIC ^respond($$topic))
+			if (%response != $_responseCount) # arrête quand nous trouvons quelque chose à dire
+			{
+				^end(RULE)	# nous avons terminé, ceci termine la boucle (pas la règle)
+			}
+		}
+	}	
+
+	# Si aucun sujet ne réagit, passez au dernier sujet sans mot-clé
+	if (%response == $_responseCount) 
+	{
+		nofail(TOPIC ^respond(~sansmotcle))
+	}
+
+	# having no good response we know, now generate quibbles
+
+	# now we need to find fake responses 
+	if (%response == $_responseCount AND %rand > 50)
+	{
+		nofail(TOPIC respond(~sansmotcle))
+	}
+
+	# si nous avons des répliques pour ce que nous avons dit OU nous avons posé une question, arrêtez ici
+	if (%outputrejoinder OR %lastquestion) 
+	{
+		end(TOPIC)
+	}
+
+
+	if (%response == $_responseCount AND ^marked($$currenttopic)) { nofail(TOPIC ^gambit($$currenttopic)) } # gambit current topic since keywords match current topic
+
+	if (%response == $_responseCount) # gambit de TOUT sujet correspondant
+	{
+		@8 = ^keywordtopics()	# obtient des sujets référencés en entrée
+		loop()
+		{
+			$$topic = first(@8subject)
+			nofail(TOPIC ^Gambit($$topic))	# gambit du topic de plus présentis
+			if (%response != $_responseCount) # arrête quand nous trouvons quelque chose
+			{
+				^end(RULE)
+			}
+		}
+	}
+	if (%response == $_responseCount){ nofail(TOPIC ^gambit($$currenttopic)) } # gambit du sujet actuel même si aucun mot-clé n'a été trouvé
+	
+	if (%response == $_responseCount) 
+	{ 
+		@8 = ^GambitTopics()		# tous les sujets avec gambits (à l'exclusion des sujets du système)
+		loop()
+		{
+			$$topic = pick(@8subject)
+			nofail(TOPIC ^Gambit($$topic))	# essaye un sujet au hasard
+			if (%response != $_responseCount)
+			{
+				^end(RULE)
+			}
+		}
+	}
+	
+	if (%response == $_responseCount) 
+	{
+		 ^repeat() 
+		 Je ne sais pas quoi dire.
+	}
+
+
+topic: ~XPOSTPROCESS system () # gambits seulement - pas autorisé à écrire en sortie - génère de la parole sur Windows - pour Linux installer Festival (ou equivalent) et l'appeller cela à la place.
+
+t: (^query(direct_v ? chatoutput ? -1 ? @9  ))  # obtient les phrases (pourquoi est l'objet) - n'a plus de citations autour de lui
+	loop()
+	{
+		$$tmp = ^last(@9subject) # noter la dernière sortie qui est une chaîne entre guillemets
+		if (!%server AND %os == windows  AND !$SHUTUP)
+		{
+			$$tmp = ^"talk \"$$tmp\" "
+			popen($$tmp null)
+		}
+        if (!%server AND %os == mac  AND !$SHUTUP)
+        {
+            $$shellerror = system(^"say \"$$tmp\" ")
+        }
+	}

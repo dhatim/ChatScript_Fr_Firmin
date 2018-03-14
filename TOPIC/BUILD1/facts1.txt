@@ -1,0 +1,3 @@
+﻿$cs_trace=0
+#`end variables
+( firmin defaultbot defaultbot x100000 )

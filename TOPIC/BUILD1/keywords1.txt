@@ -1,0 +1,5 @@
+﻿T~enfance ( voyage histoire jeune mémoire petite enfance enfant )
+T~introductions ( ici nom ~emohowzit ~emohello ~emogoodbye )
+T~sansmotcle ( )
+T~control ( )
+T~xpostprocess ( )

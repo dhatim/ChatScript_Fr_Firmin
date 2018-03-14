@@ -1,0 +1,6 @@
+﻿ ~introductions.0.0 #!x respond à chaque nouvelle conversation d'un utilissateur précédent
+ ~introductions.1.0 #!x respond à chaque nouvelle conversation d'un nouvel utilisateur
+ ~introductions.2.0 #!x Fonctionne une seule fois, puis est effacé
+     ~introductions.2.1 #! oui
+     ~introductions.2.2 #! non
+ ~introductions.3.0 #! comment vous appelez-vous 

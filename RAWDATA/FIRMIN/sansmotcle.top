@@ -1,0 +1,43 @@
+# ce sujet est activé lorsque qu'aucun sujet n'est prévu.
+# il est appelé directement par le script de contrôle script lorsque tout le reste a échoué.
+
+topic: ~sansmotcle nostay()
+
+u: (< dit _*) keep() repeat() '_0
+
+#! Quel est le sens de la vie
+?: ( << quel sens de la vie >>) Si vous croyez en la réincarnation, la vie est une sorte de friperie pour âmes de seconde main.
+
+
+#! oui, pour si l'utilisateur dit oui, ok ou presse juste entrée, alors on passe à la suite en donnant la main au bot
+u: ( < [~yesanswer ~more]>) ^keep() gambit($$currenttopic) # le sujet courrant continu à se dérouler.
+
+#! Qu'est-ce que la démocratie?
+#! Est-ce que le climat change?
+?: (est-ce que {a} _*~2 >) ^keep() $$tmp = '_0
+	$$url = ^"\"https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=2&exintro=&explaintext=&format=json&utf8=&redirects=&titles=$$tmp\""
+	# Url escaping is done by ^jsonopen
+	$$user_agent = ^"myemail@hotmail.com User-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)"
+	$$tmp = ^jsonopen(GET $$url "" $$user_agent)
+		# ^jsontree($$tmp)
+		# ^jsonpath(  ".query .pages .56333 .extract" $$tmp)
+		@0 = ^query(direct_v ? extract ? 1)
+		@0object
+
+#! Qui est Gandhi
+#! Qui est Anatole France #  Lyndon_Jonhnson en temps que mot fusionné
+#! Who is Athenian democracy # testé avec deux mots non fusionnés
+?: (qui est _*~2 >) ^keep()
+	$$tmp = ^pos(capitalize ^original(_0))
+	##<<
+		On utilise original à la place de '_0 pour éviter de passer par le Wordnet dictionnary, car Wikipedia possède un contenu plus accessible.
+		et l'orthographe correcte est laissée à l'utilisateur. En retour, cela évite les vérifications orthographiques excessives sur les noms propres.
+		Wikipedia ne redirige pas systématiquement les demandes mal placées. Les noms propres doivent toujours être en majuscules
+	##>>
+	$$url = ^"\"https://fr.wikipedia.org/w/api.php?action=query&prop=extracts&exsentences=2&exintro=&explaintext=&format=json&utf8=&redirects=&titles=$$tmp\""
+	$$user_agent = ^"myemail@hotmail.com User-Agent: Mozilla/5.0 (compatible; MSIE 10.0; Windows NT 6.2; WOW64; Trident/6.0)"
+	$$tmp = jsonopen(GET $$url "" $$user_agent)
+		# ^jsontree($$tmp)
+		# ^jsonpath(  ".query .pages .56333 .extract" $$tmp)
+		@0 = ^query(direct_v ? extract ? 1)
+		@0object

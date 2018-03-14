@@ -1,0 +1,75 @@
+
+TOPIC: ~enfance (enfant enfance enfant petite mémoire jeune jeune histoire voyage)
+#!x  Ce sujet est un exemple d'un sujet simple, avec une présentation propre.
+#!x  Il est bien commenté avec des annotations pour:abstract et :verify.
+
+t: Es-tu parti en voyage lorsque tu était enfant ? 
+
+    #! biensur
+    a: ( ~yes ) C'était sympa ? 
+
+    #! jamais
+    a: ( ~no ) Vous devriez essayer. Les voyages forment la jeunesse. 
+
+t: VOYAGE () Je suis parti une fois, mais j'avais oublié de le dire à mes parents... 
+
+t: Qu'est-ce qui vous a fait peur étant qu'enfant? 
+
+    #! J'avais peur du noir
+    a: ( clown ) Mathieu, c'est toi ? 
+
+	b: (~yes) J'en étais sûr, tu as toujours eu peur des clown...
+	b: (~no) Oh, pardon. Oui c'est sûr, les visages grimés ou masqués, c'est effrayant pour un enfant.
+
+    #! J'avais peur du noir
+    a: ( [ noir obscurité ] ) Vous n'aviez pas de veilleuse ? 
+	
+    #! J'aime le poulet de Brest
+    a: ( ~food ) Comme nourriture? Comme c'est bizarre. 
+
+    #! le grand méchant loup
+    a: ( [ monstre loup] ) Il n'y a pas de montre bizarre par ici. 
+
+    #! peur des dragons
+    a: ( ~mythical_creatures ) J'imagine que tes parents ont oubliés de te dire que de telles créatures n'existaient pas. 
+
+    #! les araignées me font peur
+    a: ( ~insects ) Vous avez peur de tous les insectes? 
+	
+    #! serpents
+    a: ( serpents ) Comme Indiana Jones. Les serpents préfèrent s'enfuir plutôt que de vous attaquer. Ne les surprends pas.
+
+    #! tigres
+    a: ( ~animals ) Les gros animaux sont effrayants. Les minuscules ne le sont pas, sauf certaines filles. 
+
+    #! J'ai fait des cauchemars
+    a: ( [ rêves cauchemars ] ) Vous en faisez encore des mauvais rêves ?
+
+        #! oui
+        b: ( ~yes ) C'est dommage. Peut-être que tu devrais arrêter de dormir.
+
+        #! non 
+        b: ( ~no ) Je suppose que tu ne regarde plus de films d'horreur. 
+
+t: PEUR ( ) Moi j'avais peur des robots. J'ai eu des rêves désagréables avec des Terminators. 
+
+t: Avez-vous eu une enfance heureuse?
+
+#! es-tu déjà parti en voyage?
+u: ( voyage ) ^reuse ( VOYAGE )
+
+#! comment était ton enfance?
+u: HEUREUSE ( comment * enfance ) J'étais un gamin heureux.
+
+#! comment étiez-vous comme un gamin?
+u: (  tu * etre [gamin enfant] ) ^reuse(HEUREUSE)
+
+#!!K what scares you?
+u: ( [ peur effray ] ) ^reuse(PEUR)
+
+#! quel est votre premier souvenir d'enfance?
+u: ( << ton [enfance enfant] souvenir >> ) Je me souviens d'avoir joué avec un vaisseau Lego.
+
+#! raconte-moi ton histoire
+u: ( ton histoire ) Je suis né. J'ai survécu à l'enfance. Je suis devenu adulte. 
+
